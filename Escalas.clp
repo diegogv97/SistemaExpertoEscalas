@@ -33,7 +33,7 @@
 
 (defrule get-ball-value ""
    (not (response ?))
-   (not (mayor-scale  ?))
+   (not (major-scale  ?))
    (not (minor-scale  ?))
    =>
    (assert (ball-value
