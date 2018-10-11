@@ -107,34 +107,59 @@
 ;;;* balls 5-7 *
 ;;;****************
 
-(defrule get-ball-value-5 ""
+
+(defrule get-ball-value-5-sharp ""
    (ball-value 5)
+   (sharp-or-flat sostenidos)
    (not (response ?))
    =>
    (assert (response "La bolita es 5"))
    (assert (major-scale yes))
    (assert (minor-scale no))
-   (assert (scale "INDEFINIDO"))
+   (assert (scale "Si Mayor"))
 )
 
-(defrule get-ball-value-6 ""
+(defrule get-ball-value-6-sharp ""
    (ball-value 6)
+   (sharp-or-flat sostenidos)
    (not (response ?))
    =>
    (assert (response "La bolita es 6"))
    (assert (major-scale yes))
-   (assert (minor-scale no))   
-   (assert (scale "INDEFINIDO"))
+   (assert (minor-scale no))
+   (assert (scale "Fa sostenido Mayor"))
 )
 
-(defrule get-ball-value-7 ""
+(defrule get-ball-value-7-sharp ""
    (ball-value 7)
+   (sharp-or-flat sostenidos)
    (not (response ?))
    =>
    (assert (response "La bolita es 7"))
    (assert (major-scale yes))
-   (assert (minor-scale no))   
-   (assert (scale "INDEFINIDO"))
+   (assert (minor-scale no))
+   (assert (scale "Do sostenido Mayor"))
+)
+
+(defrule get-ball-value-5-flat ""
+   (ball-value 5)
+   (sharp-or-flat bemoles)
+   (not (response ?))
+   =>
+)
+
+(defrule get-ball-value-6-flat ""
+   (ball-value 6)
+   (sharp-or-flat bemoles)
+   (not (response ?))
+   =>
+)
+
+(defrule get-ball-value-7-flat ""
+   (ball-value 7)
+   (sharp-or-flat bemoles)
+   (not (response ?))
+   =>
 )
 
 ;;;****************
