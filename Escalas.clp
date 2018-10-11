@@ -35,14 +35,31 @@
    (not (response ?))
    (not (major-scale  ?))
    (not (minor-scale  ?))
+   (not (scale  ?))
    =>
    (assert (ball-value
       (ask-question "Ingrese el numero de l bolita. (1-24): "
-                    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  19 20 21 22 23 24))))
+                    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  19 20 21 22 23 24))
+   )
+)
+
+(defrule 5-7-ballValueQuestion ""
+   (ball-value ?number)
+   (test (<= ?number 7))
+   (test (<= 5 ?number))
+   =>
+   (assert (sharp-or-flat
+      (ask-question "¿Desea la escala en sostenidos o bemoles? : "
+                    sostenidos bemoles))
+   )
+)
+;;;****************
+;;;* BALL RULES *
+;;;****************
 
 
 ;;;****************
-;;;* REPAIR RULES *
+;;;* balls 1-4 *
 ;;;****************
 
 
@@ -53,6 +70,7 @@
    (assert (response "La bolita es 1"))
    (assert (major-scale yes))
    (assert (minor-scale no))
+   (assert (scale "Sol Mayor"))
 )
 
 (defrule get-ball-value-2 ""
@@ -62,6 +80,7 @@
    (assert (response "La bolita es 2"))
    (assert (major-scale yes))
    (assert (minor-scale no))
+   (assert (scale "Re Mayor"))
 )
 
 (defrule get-ball-value-3 ""
@@ -71,6 +90,7 @@
    (assert (response "La bolita es 3"))
    (assert (major-scale yes))
    (assert (minor-scale no))
+   (assert (scale "La Mayor"))
 )
 
 (defrule get-ball-value-4 ""
@@ -80,7 +100,12 @@
    (assert (response "La bolita es 4"))
    (assert (major-scale yes))
    (assert (minor-scale no))   
+   (assert (scale "Mi Mayor"))
 )
+
+;;;****************
+;;;* balls 5-7 *
+;;;****************
 
 (defrule get-ball-value-5 ""
    (ball-value 5)
@@ -89,6 +114,7 @@
    (assert (response "La bolita es 5"))
    (assert (major-scale yes))
    (assert (minor-scale no))
+   (assert (scale "INDEFINIDO"))
 )
 
 (defrule get-ball-value-6 ""
@@ -98,6 +124,7 @@
    (assert (response "La bolita es 6"))
    (assert (major-scale yes))
    (assert (minor-scale no))   
+   (assert (scale "INDEFINIDO"))
 )
 
 (defrule get-ball-value-7 ""
@@ -107,12 +134,18 @@
    (assert (response "La bolita es 7"))
    (assert (major-scale yes))
    (assert (minor-scale no))   
+   (assert (scale "INDEFINIDO"))
 )
 
+;;;****************
+;;;* balls 8-11 *
+;;;****************
 (defrule get-ball-value-8 ""
    (ball-value 8)
    (not (response ?))
+   (not (response ?))
    =>
+   (assert (calc8-11 (- 12 8)))
    (assert (response "La bolita es 8"))
    (assert (major-scale yes))
    (assert (minor-scale no))
@@ -122,7 +155,8 @@
    (ball-value 9)
    (not (response ?))
    =>
-   (assert (response "La bolita es 9")) 
+   (assert (calc8-11 (- 12 9)))
+   (assert (response "La bolita es 9"))
    (assert (major-scale yes))
    (assert (minor-scale no))
   
@@ -132,19 +166,57 @@
 (ball-value 10)
    (not (response ?))
    =>
+   (assert (calc8-11 (- 12 10)))
    (assert (response "La bolita es 10"))
    (assert (major-scale yes))
-   (assert (minor-scale no))   
+   (assert (minor-scale no))
 )
 
 (defrule get-ball-value-11 ""
    (ball-value 11)
    (not (response ?))
    =>
+   (assert (calc8-11 (- 12 11)))
    (assert (response "La bolita es 11"))
    (assert (major-scale yes))
-   (assert (minor-scale no))   
+   (assert (minor-scale no))
 )
+
+(defrule getScale8 ""
+  (calc8-11 4)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (scale "La bemol Mayor"))
+)
+
+(defrule getScale9 ""
+  (calc8-11 3)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (scale "Mi bemol Mayor"))
+)
+
+(defrule getScale10 ""
+  (calc8-11 2)
+  (ball-value ?)
+  (not (response ?))
+   =>
+   (assert (scale "Si bemol Mayor"))
+)
+
+(defrule getScale11 ""
+  (calc8-11 1)
+  (ball-value ?)
+  (not (response ?))
+   =>
+   (assert (response "Fa Mayor"))
+)
+
+;;;****************
+;;;* balls 12-... *
+;;;****************
 
 (defrule get-ball-value-12 ""
    (ball-value 12)
@@ -251,11 +323,14 @@
 (defrule print-response ""
   (declare (salience 10))
   (response ?item)
-  (major-scale ?iScale)
+  (major-scale ?maScale)
+  (minor-scale ?miScale)
+  (scale       ?scale)
   =>
   (printout t crlf crlf)
-  (printout t "Numero:")
-  (printout t crlf crlf)
   (format t " %s%n%n%n" ?item)
-   (format t " %s%n%n%n" ?iScale))
+  (format t " Escala mayor?  %s%n%n%n" ?maScale)
+  (format t " Escala menor?  %s%n%n%n" ?miScale)
+  (format t " Escala:  %s%n%n%n " ?scale)
+)
 
