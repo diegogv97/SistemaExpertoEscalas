@@ -1,13 +1,13 @@
 
 ;;;======================================================
-;;;   Automotive Expert System
+;;;   Sistema experto para el estudio de Escalas
+;;;       Proyecto II de Inteligencia Artifical, ITCR
+;;;     EL usuario usa una bolsa de bolitas numeradas
+;;;     del 1 al 24, segun el numero, el sistema 
+;;;     indica la esacala musical a estudiar.
+;;;   Desarrollado en CLIPS Version 6.3 E
 ;;;
-;;;     This expert system diagnoses some simple
-;;;     problems with a car.
-;;;
-;;;     CLIPS Version 6.3 Example
-;;;
-;;;     To execute, merely load, reset and run.
+;;;     Para ejecutar, solo load, reset y run.
 ;;;======================================================
 
 ;;****************
@@ -53,13 +53,24 @@
                     sostenidos bemoles))
    )
 )
+
+(defrule 17-19-ballValueQuestion ""
+   (ball-value ?number)
+   (test (<= ?number 19))
+   (test (<= 17 ?number))
+   =>
+   (assert (sharp-or-flat
+      (ask-question "¿Desea la escala en sostenidos o bemoles? : "
+                    sostenidos bemoles))
+   )
+)
 ;;;****************
 ;;;* BALL RULES *
 ;;;****************
 
 
 ;;;****************
-;;;* balls 1-4 *
+;;;*   balls 1-4  *
 ;;;****************
 
 
@@ -70,7 +81,7 @@
    (assert (response "La bolita es 1"))
    (assert (major-scale yes))
    (assert (minor-scale no))
-   (assert (scale "Sol Mayor"))
+   (assert (scale "Sol"))
 )
 
 (defrule get-ball-value-2 ""
@@ -80,7 +91,7 @@
    (assert (response "La bolita es 2"))
    (assert (major-scale yes))
    (assert (minor-scale no))
-   (assert (scale "Re Mayor"))
+   (assert (scale "Re"))
 )
 
 (defrule get-ball-value-3 ""
@@ -90,7 +101,7 @@
    (assert (response "La bolita es 3"))
    (assert (major-scale yes))
    (assert (minor-scale no))
-   (assert (scale "La Mayor"))
+   (assert (scale "La"))
 )
 
 (defrule get-ball-value-4 ""
@@ -100,11 +111,11 @@
    (assert (response "La bolita es 4"))
    (assert (major-scale yes))
    (assert (minor-scale no))   
-   (assert (scale "Mi Mayor"))
+   (assert (scale "Mi"))
 )
 
 ;;;****************
-;;;* balls 5-7 *
+;;;*  balls 5-7   *
 ;;;****************
 
 
@@ -116,7 +127,7 @@
    (assert (response "La bolita es 5"))
    (assert (major-scale yes))
    (assert (minor-scale no))
-   (assert (scale "Si Mayor"))
+   (assert (scale "Si"))
 )
 
 (defrule get-ball-value-6-sharp ""
@@ -127,7 +138,7 @@
    (assert (response "La bolita es 6"))
    (assert (major-scale yes))
    (assert (minor-scale no))
-   (assert (scale "Fa sostenido Mayor"))
+   (assert (scale "Fa sostenido"))
 )
 
 (defrule get-ball-value-7-sharp ""
@@ -138,7 +149,7 @@
    (assert (response "La bolita es 7"))
    (assert (major-scale yes))
    (assert (minor-scale no))
-   (assert (scale "Do sostenido Mayor"))
+   (assert (scale "Do sostenido"))
 )
 
 (defrule get-ball-value-5-flat ""
@@ -146,6 +157,10 @@
    (sharp-or-flat bemoles)
    (not (response ?))
    =>
+   (assert (calc5-7 (- 12 5)))
+   (assert (response "La bolita es 5"))
+   (assert (major-scale yes))
+   (assert (minor-scale no))
 )
 
 (defrule get-ball-value-6-flat ""
@@ -153,6 +168,10 @@
    (sharp-or-flat bemoles)
    (not (response ?))
    =>
+   (assert (calc5-7 (- 12 6)))
+   (assert (response "La bolita es 6"))
+   (assert (major-scale yes))
+   (assert (minor-scale no))
 )
 
 (defrule get-ball-value-7-flat ""
@@ -160,10 +179,39 @@
    (sharp-or-flat bemoles)
    (not (response ?))
    =>
+   (assert (calc5-7 (- 12 7)))
+   (assert (response "La bolita es 7"))
+   (assert (major-scale yes))
+   (assert (minor-scale no))
 )
 
+(defrule getScale5 ""
+  (calc5-7 7)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (scale "Do bemol"))
+)
+
+(defrule getScale6 ""
+  (calc5-7 6)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (scale "Sol bemol"))
+)
+
+(defrule getScale7 ""
+  (calc5-7 5)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (scale "Re bemol"))
+)
+
+
 ;;;****************
-;;;* balls 8-11 *
+;;;*  balls 8-11  *
 ;;;****************
 (defrule get-ball-value-8 ""
    (ball-value 8)
@@ -184,11 +232,10 @@
    (assert (response "La bolita es 9"))
    (assert (major-scale yes))
    (assert (minor-scale no))
-  
 )
 
 (defrule get-ball-value-10 ""
-(ball-value 10)
+   (ball-value 10)
    (not (response ?))
    =>
    (assert (calc8-11 (- 12 10)))
@@ -212,7 +259,7 @@
   (ball-value ?)
   (response ?)
    =>
-   (assert (scale "La bemol Mayor"))
+   (assert (scale "La bemol"))
 )
 
 (defrule getScale9 ""
@@ -220,27 +267,27 @@
   (ball-value ?)
   (response ?)
    =>
-   (assert (scale "Mi bemol Mayor"))
+   (assert (scale "Mi bemol"))
 )
 
 (defrule getScale10 ""
   (calc8-11 2)
   (ball-value ?)
-  (not (response ?))
+  (response ?)
    =>
-   (assert (scale "Si bemol Mayor"))
+   (assert (scale "Si bemol"))
 )
 
 (defrule getScale11 ""
   (calc8-11 1)
   (ball-value ?)
-  (not (response ?))
+  (response ?)
    =>
-   (assert (response "Fa Mayor"))
+   (assert (scale "Fa"))
 )
 
 ;;;****************
-;;;* balls 12-... *
+;;;*   ball 12    *
 ;;;****************
 
 (defrule get-ball-value-12 ""
@@ -250,89 +297,264 @@
    (assert (response "La bolita es 12"))
    (assert (major-scale yes))
    (assert (minor-scale no))   
+   (assert (scale "Do"))
 )
+
+;;;****************
+;;;* balls 13-23  *
+;;;****************
 
 (defrule get-ball-value-13 ""
    (ball-value 13)
    (not (response ?))
    =>
    (assert (response "La bolita es 13"))
-   (assert (major-scale yes))
-   (assert (minor-scale no))   
+   (assert (calc13-23 (- 13 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes))   
+   (assert (sharp-or-flat sostenidos))
+)
+
+(defrule getScale13 ""
+  (calc13-23 1)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (relative G))
 )
 
 (defrule get-ball-value-14 ""
    (ball-value 14)
    (not (response ?))
    =>
-   (assert (response "La bolita es 14")))
+   (assert (response "La bolita es 14"))
+   (assert (calc13-23 (- 14 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes))  
+   (assert (sharp-or-flat sostenidos))
+)
+
+(defrule getScale14 ""
+  (calc13-23 2)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (relative D))
+)
 
 (defrule get-ball-value-15 ""
    (ball-value 15)
    (not (response ?))
    =>
-   (assert (response "La bolita es 15")))
+   (assert (response "La bolita es 15"))
+   (assert (calc13-23 (- 15 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes))   
+   (assert (sharp-or-flat sostenidos))  
+)
+
+(defrule getScale15 ""
+  (calc13-23 3)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (relative A))
+)
 
 (defrule get-ball-value-16 ""
    (ball-value 16)
    (not (response ?))
    =>
-   (assert (response "La bolita es 16")))
+   (assert (response "La bolita es 16"))
+   (assert (calc13-23 (- 16 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes))  
+   (assert (sharp-or-flat sostenidos))   
+)
+
+(defrule getScale16 ""
+  (calc13-23 4)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (relative E))
+)
 
 (defrule get-ball-value-17 ""
    (ball-value 17)
    (not (response ?))
    =>
-   (assert (response "La bolita es 17")))
+   (assert (response "La bolita es 17"))
+   (assert (calc13-23 (- 17 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes)) 
+)
 
 (defrule get-ball-value-18 ""
    (ball-value 18)
    (not (response ?))
    =>
-   (assert (response "La bolita es 18")))
+   (assert (response "La bolita es 18"))
+   (assert (calc13-23 (- 18 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes)) 
+)
 
 (defrule get-ball-value-19 ""
    (ball-value 19)
    (not (response ?))
    =>
-   (assert (response "La bolita es 19")))
+   (assert (response "La bolita es 19"))
+   (assert (calc13-23 (- 19 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes)) 
+)
    
-(defrule get-ball-value-19 ""
-   (ball-value 19)
-   (not (response ?))
-   =>
-   (assert (response "La bolita es 19")))
-
 (defrule get-ball-value-20 ""
    (ball-value 20)
    (not (response ?))
    =>
-   (assert (response "La bolita es 20")))
+   (assert (response "La bolita es 20"))
+   (assert (calc13-23 (- 20 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes)) 
+   (assert (sharp-or-flat bemoles))  
+)
+
+(defrule getScale20 ""
+  (calc13-23 8)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (relative A))
+)
 
 (defrule get-ball-value-21 ""
    (ball-value 21)
    (not (response ?))
    =>
-   (assert (response "La bolita es 21")))
+   (assert (response "La bolita es 21"))
+   (assert (calc13-23 (- 21 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes)) 
+   (assert (sharp-or-flat bemoles))  
+)
+
+(defrule getScale21 ""
+  (calc13-23 9)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (relative E))
+)
 
 (defrule get-ball-value-22 ""
    (ball-value 22)
    (not (response ?))
    =>
-   (assert (response "La bolita es 22")))
+   (assert (response "La bolita es 22"))
+   (assert (calc13-23 (- 22 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes)) 
+   (assert (sharp-or-flat bemoles)) 
+)
+
+(defrule getScale22 ""
+  (calc13-23 10)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (relative B))
+)
 
 (defrule get-ball-value-23 ""
    (ball-value 23)
    (not (response ?))
    =>
-   (assert (response "La bolita es 23")))
+   (assert (response "La bolita es 23"))
+   (assert (calc13-23 (- 23 12)))
+   (assert (major-scale no))
+   (assert (minor-scale yes)) 
+   (assert (sharp-or-flat bemoles)) 
+)
+
+(defrule getScale23 ""
+  (calc13-23 11)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (relative F))
+)
+
+
+;;;****************
+;;;* ball  24     *
+;;;****************
 
 (defrule get-ball-value-24 ""
    (ball-value 24)
    (not (response ?))
    =>
-   (assert (response "La bolita es 24")))
+   (assert (response "La bolita es 24"))
+   (assert (major-scale no))
+   (assert (minor-scale yes)) 
+   (assert (scale "Do Menor"))
+)
 
+
+
+;;;****************
+;;;*minor relative*
+;;;*     rules    *
+;;;****************
+
+(defrule scale-D ""
+   (relative D)
+   (response ?)
+   =>
+   (assert (scale "Si"))
+   (assert (frontier yes))
+)
+
+(defrule scale-E ""
+   (relative E)
+   (response ?)
+   =>
+   (assert (scale "Do"))
+   (assert (frontier no))
+)
+
+(defrule scale-F ""
+   (relative F)
+   (response ?)
+   =>
+   (assert (scale "Re"))
+   (assert (frontier yes))
+)
+
+(defrule scale-G ""
+   (relative G)
+   (response ?)
+   =>
+   (assert (scale "Mi"))
+   (assert (frontier yes))
+)
+
+(defrule scale-A ""
+   (relative A)
+   (response ?)
+   =>
+   (assert (scale "Fa"))
+   (assert (frontier no))
+)
+
+(defrule scale-B ""
+   (relative B)
+   (response ?)
+   =>
+   (assert (scale "Sol"))
+   (assert (frontier no))
+)
 
 ;;;********************************
 ;;;* STARTUP AND CONCLUSION RULES *
@@ -345,17 +567,46 @@
   (printout t "Proyecto de IA 2: Sistema Experto")
   (printout t crlf crlf))
 
-(defrule print-response ""
+(defrule print-response-Major ""
   (declare (salience 10))
   (response ?item)
-  (major-scale ?maScale)
-  (minor-scale ?miScale)
+  (major-scale yes)
   (scale       ?scale)
   =>
   (printout t crlf crlf)
   (format t " %s%n%n%n" ?item)
-  (format t " Escala mayor?  %s%n%n%n" ?maScale)
-  (format t " Escala menor?  %s%n%n%n" ?miScale)
-  (format t " Escala:  %s%n%n%n " ?scale)
+  (format t " Escala:  %s Mayor %n%n%n " ?scale)
+)
+
+(defrule print-response-Minor-YesFrontier ""
+  (declare (salience 10))
+  (minor-scale yes)
+  (scale       ?scale)
+  (frontier yes)
+  =>
+  (printout t crlf crlf)
+  (format t " Escala:  %s Menor %n%n%n " ?scale)
+)
+
+(defrule print-response-Minor-NoFrontierSharp ""
+  (declare (salience 10))
+  (minor-scale yes)
+  (scale       ?scale)
+  (frontier no)
+  (sharp-or-flat sostenidos)
+  =>
+  (printout t crlf crlf)
+  (format t " Escala:  %s Sostenido Menor %n%n%n " ?scale)
+)
+
+(defrule print-response-Minor-NoFrontierFlat ""
+  (declare (salience 10))
+  (minor-scale yes)
+  (scale       ?scale)
+  (frontier no)
+  (sharp-or-flat bemoles)
+  =>
+  (printout t crlf crlf)
+  (format t " Escala:  %s Menor %n%n%n " ?scale)
 )
 
