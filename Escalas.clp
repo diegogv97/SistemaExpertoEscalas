@@ -380,53 +380,145 @@
    (assert (relative E))
 )
 
-(defrule get-ball-value-17 ""
+
+(defrule get-ball-value-17-sharp ""
    (ball-value 17)
+   (sharp-or-flat sostenidos)
    (not (response ?))
    =>
    (assert (response "La bolita es 17"))
    (assert (calc13-23 (- 17 12)))
    (assert (major-scale no))
-   (assert (minor-scale yes)) 
+   (assert (minor-scale yes))
 )
 
-(defrule get-ball-value-18 ""
+(defrule getScale17S ""
+  (calc13-23 5)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (20-23-balls no))
+   (assert (relative B))
+)
+
+(defrule get-ball-value-17-flat ""
+   (ball-value 17)
+   (sharp-or-flat bemoles)
+   (not (response ?))
+   =>
+   (assert (calc17-19 (- 12 (- 17 12))))
+   (assert (response "La bolita es 17"))
+   (assert (major-scale no))
+   (assert (minor-scale yes))
+)
+
+(defrule getScale17F ""
+  (calc17-19 7)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (20-23-balls no))
+   (assert (relative C))
+)
+
+(defrule get-ball-value-18-sharp ""
    (ball-value 18)
+   (sharp-or-flat sostenidos)
    (not (response ?))
    =>
    (assert (response "La bolita es 18"))
    (assert (calc13-23 (- 18 12)))
    (assert (major-scale no))
-   (assert (minor-scale yes)) 
+   (assert (minor-scale yes))
 )
 
-(defrule get-ball-value-19 ""
+(defrule getScale18S ""
+  (calc13-23 6)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (20-23-balls no))
+   (assert (relative F))
+)
+
+(defrule get-ball-value-18-flat ""
+   (ball-value 18)
+   (sharp-or-flat bemoles)
+   (not (response ?))
+   =>
+   (assert (calc17-19 (- 12(- 18 12))))
+   (assert (response "La bolita es 18"))
+   (assert (major-scale no))
+   (assert (minor-scale yes))
+)
+
+(defrule getScale18F ""
+  (calc17-19 6)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (20-23-balls no))
+   (assert (relative G))
+)
+
+(defrule get-ball-value-19-sharp ""
    (ball-value 19)
+   (sharp-or-flat sostenidos)
    (not (response ?))
    =>
    (assert (response "La bolita es 19"))
    (assert (calc13-23 (- 19 12)))
    (assert (major-scale no))
-   (assert (minor-scale yes)) 
+   (assert (minor-scale yes))
 )
-   
+
+(defrule getScale19S ""
+  (calc13-23 7)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (20-23-balls no))
+   (assert (relative C))
+)
+
+(defrule get-ball-value-19-flat ""
+   (ball-value 19)
+   (sharp-or-flat bemoles)
+   (not (response ?))
+   =>
+   (assert (calc17-19 (- 12(- 19 12))))
+   (assert (response "La bolita es 19"))
+   (assert (major-scale no))
+   (assert (minor-scale yes))
+)
+
+(defrule getScale19F ""
+  (calc17-19 5)
+  (ball-value ?)
+  (response ?)
+   =>
+   (assert (20-23-balls no))
+   (assert (relative D))
+)
+
 (defrule get-ball-value-20 ""
    (ball-value 20)
    (not (response ?))
    =>
    (assert (response "La bolita es 20"))
-   (assert (calc13-23 (- 20 12)))
+   (assert (calc20-23  (- 12 (- 20 12))))
    (assert (major-scale no))
    (assert (minor-scale yes)) 
    (assert (sharp-or-flat bemoles))  
 )
 
 (defrule getScale20 ""
-  (calc13-23 8)
+  (calc20-23 4)
   (ball-value ?)
   (response ?)
    =>
    (assert (relative A))
+   (assert (20-23-balls yes))
 )
 
 (defrule get-ball-value-21 ""
@@ -434,18 +526,19 @@
    (not (response ?))
    =>
    (assert (response "La bolita es 21"))
-   (assert (calc13-23 (- 21 12)))
+   (assert (calc20-23  (- 12 (- 21 12))))
    (assert (major-scale no))
    (assert (minor-scale yes)) 
    (assert (sharp-or-flat bemoles))  
 )
 
 (defrule getScale21 ""
-  (calc13-23 9)
+  (calc20-23 3)
   (ball-value ?)
   (response ?)
    =>
    (assert (relative E))
+   (assert (20-23-balls yes))
 )
 
 (defrule get-ball-value-22 ""
@@ -453,18 +546,19 @@
    (not (response ?))
    =>
    (assert (response "La bolita es 22"))
-   (assert (calc13-23 (- 22 12)))
+   (assert (calc20-23 (- 12 (- 22 12))))
    (assert (major-scale no))
    (assert (minor-scale yes)) 
    (assert (sharp-or-flat bemoles)) 
 )
 
 (defrule getScale22 ""
-  (calc13-23 10)
+  (calc20-23 2)
   (ball-value ?)
   (response ?)
    =>
    (assert (relative B))
+   (assert (20-23-balls yes))
 )
 
 (defrule get-ball-value-23 ""
@@ -472,18 +566,19 @@
    (not (response ?))
    =>
    (assert (response "La bolita es 23"))
-   (assert (calc13-23 (- 23 12)))
+   (assert (calc20-23 (- 12 (- 23 12))))
    (assert (major-scale no))
    (assert (minor-scale yes)) 
    (assert (sharp-or-flat bemoles)) 
 )
 
 (defrule getScale23 ""
-  (calc13-23 11)
+  (calc20-23 1)
   (ball-value ?)
   (response ?)
    =>
    (assert (relative F))
+   (assert (20-23-balls yes))
 )
 
 
@@ -498,7 +593,8 @@
    (assert (response "La bolita es 24"))
    (assert (major-scale no))
    (assert (minor-scale yes)) 
-   (assert (scale "Do Menor"))
+   (assert (scale "La"))
+   (assert (frontier yes))
 )
 
 
@@ -507,6 +603,14 @@
 ;;;*minor relative*
 ;;;*     rules    *
 ;;;****************
+
+(defrule scale-C ""
+   (relative C)
+   (response ?)
+   =>
+   (assert (scale "La"))
+   (assert (frontier yes))
+)
 
 (defrule scale-D ""
    (relative D)
@@ -569,12 +673,11 @@
 
 (defrule print-response-Major ""
   (declare (salience 10))
-  (response ?item)
+  (response ?)
   (major-scale yes)
   (scale       ?scale)
   =>
   (printout t crlf crlf)
-  (format t " %s%n%n%n" ?item)
   (format t " Escala:  %s Mayor %n%n%n " ?scale)
 )
 
@@ -583,6 +686,7 @@
   (minor-scale yes)
   (scale       ?scale)
   (frontier yes)
+  (not (20-23-balls ?))
   =>
   (printout t crlf crlf)
   (format t " Escala:  %s Menor %n%n%n " ?scale)
@@ -605,8 +709,44 @@
   (scale       ?scale)
   (frontier no)
   (sharp-or-flat bemoles)
+  (20-23-balls yes)
   =>
-  (printout t crlf crlf)
-  (format t " Escala:  %s Menor %n%n%n " ?scale)
+    (printout t crlf crlf)
+    (format t " Escala:  %s Menor %n%n%n " ?scale)
 )
 
+(defrule print-response-Minor-NoFrontierFlat1 ""
+  (declare (salience 10))
+  (minor-scale yes)
+  (scale       ?scale)
+  (frontier yes)
+  (sharp-or-flat bemoles)
+  (20-23-balls yes)
+  =>
+    (printout t crlf crlf)
+    (format t " Escala:  %s Menor %n%n%n " ?scale)
+)
+
+(defrule print-response-Minor-yesFrontierFlat2 ""
+  (declare (salience 10))
+  (minor-scale yes)
+  (scale       ?scale)
+  (frontier yes)
+  (sharp-or-flat bemoles)
+  (20-23-balls no)
+  =>
+    (printout t crlf crlf)
+    (format t " Escala:  %s Bemol Menor %n%n%n " ?scale)
+)
+
+(defrule print-response-Minor-yesFrontiersharp ""
+  (declare (salience 10))
+  (minor-scale yes)
+  (scale       ?scale)
+  (frontier yes)
+  (sharp-or-flat sostenidos)
+  (20-23-balls no)
+  =>
+    (printout t crlf crlf)
+    (format t " Escala:  %s Sostenido Menor %n%n%n " ?scale)
+)
